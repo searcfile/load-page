@@ -1508,7 +1508,7 @@ if (logoutBtn) {
     if (window.google?.accounts?.id) {
       google.accounts.id.disableAutoSelect();
     }
-    window.location.href = "/login";
+    window.location.href = "https://searcfile.github.io/load-page/5g88/login";
   });
 }
 window.renderMobileUserBtn = function renderMobileUserBtn(){ 
