@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+
+  <script>
+    (function () {
+      const MAIN_URL = "https://5g88-main.vercel.app/login";
+
+      // 🚫 Elak loop kalau sudah di main
+      if (location.hostname === "5g88-main.vercel.app/login") return;
+
+      // 🔥 Clear semua query & hash supaya tak ikut redirect lama
+      window.location.replace(MAIN_URL);
+    })();
+  </script>
+
+  <noscript>
+    <meta http-equiv="refresh" content="0; url=https://5g88-main.vercel.app/login">
+  </noscript>
+
+</head>
+<body></body>
+</html>
