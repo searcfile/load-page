@@ -1299,12 +1299,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (e) {
     console.error("❌ Failed to parse login data:", e);
     localStorage.removeItem("gmailLogin");
-    window.location.href = "https://5g88-home.vercel.app/";
+    window.location.href = "https://searcfile.github.io/load-page/5g88/home;
     return;
   }
 
   if (!sessionData || !sessionData.email) {
-    window.location.href = "https://5g88-home.vercel.app/";
+    window.location.href = "https://searcfile.github.io/load-page/5g88/login";
     return;
   }
 
