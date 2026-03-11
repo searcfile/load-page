@@ -109,7 +109,7 @@ async function ensureGuestAuth(){
   return getOrCreateLocalGuest();
 }
 /* ===== Helpers (dipakai lintas fitur, diletak di awal agar siap pakai) ===== */
-const MAIN_PATH = "/main";
+const MAIN_PATH = "/home";
 const LOGIN_PATH = "/login"; 
 const toPseudoEmail = (uname) =>`${String(uname || '').trim().toLowerCase()}@5g88.local`;
 function formatTimestamp(date){
