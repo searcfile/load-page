@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <link rel="icon" type="image/png" href="https://i.imgur.com/uGijtpF.png" />
+  <link rel="stylesheet" href="../login/login.css" />
+  <title>Login</title>
+  <meta name="google-site-verification" content="eNASufqHE1646w04SZEOYrhItdoY2gD8MWWPQ4tdBFc" />
+  <meta name="robots" content="index, follow">
+  <meta property="og:site_name" content="5G88">
+  <meta name="description" content="The 5G88 website provides an editing page with various available features and is completely free of charge, with no usage fees. This page is only available for major partnership agents and is strictly prohibited from being shared with other agents.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Home Editor">
+  <meta property="og:description" content="The 5G88 website provides an editing page with various available features and is completely free of charge, with no usage fees. This page is only available for major partnership agents and is strictly prohibited from being shared with other agents.">
+  <meta property="og:image" content="https://icon-home-eight.vercel.app/5g88-preview.png">
+  <meta property="og:url" content="https://5g88-main.vercel.app">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Home Editor">
+  <meta name="twitter:description" content="The 5G88 website provides an editing page with various available features and is completely free of charge, with no usage fees. This page is only available for major partnership agents and is strictly prohibited from being shared with other agents.">
+  <meta name="twitter:image" content="https://icon-home-eight.vercel.app/5g88-preview.png">
+  <meta http-equiv="Content-Security-Policy"
+content="
+  default-src 'self';
+  img-src 'self' data: https://i.imgur.com https://*.googleusercontent.com;
+  script-src 'self' 'unsafe-inline'
+    https://www.gstatic.com
+    https://cdn.jsdelivr.net
+    https://openfpcdn.io
+    https://www.googleapis.com
+    https://accounts.google.com
+    https://apis.google.com
+    https://*.firebaseio.com
+    https://*.firebasedatabase.app;
+  style-src 'self' 'unsafe-inline';
+  connect-src 'self'
+    https://www.gstatic.com
+    https://*.googleapis.com
+    https://*.firebaseio.com
+    https://*.firebasedatabase.app
+    wss://*.firebaseio.com
+    wss://*.firebasedatabase.app
+    https://www.googleapis.com
+    https://identitytoolkit.googleapis.com
+    https://securetoken.googleapis.com
+    https://apis.google.com;
+  frame-src 'self'
+    https://accounts.google.com
+    https://searcfile.github.io
+    https://logins-d615f.firebaseapp.com
+    https://logins-d615f.web.app;
+  child-src 'self'
+    https://accounts.google.com
+    https://logins-d615f.firebaseapp.com
+    https://logins-d615f.web.app;
+  base-uri 'self';
+  form-action 'self' https://accounts.google.com;
+">
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+</head>
+<body>
+  <!-- Welcome popup -->
+  <div class="popup-overlay" id="popup">
+    <div class="popup-box" id="popupBox">
+      <button class="popup-close" onclick="closePopup()">✕</button>
+      <p class="popup-title">Welcome to 5G88!</p>
+      <img src="https://i.imgur.com/x1b1tj8.png" alt="5G88 Logo" class="popup-logo">
+      <div style="font-size:12px; opacity:.9; text-align:center;">
+      By continuing, you agree to our Terms and acknowledge our Privacy Policy.
+    </div>
+      <button class="popup-btn" onclick="closePopup()">OK</button>
+    </div>
+  </div>
+
+  <!-- BLOCKED POPUP -->
+  <div class="blocked-overlay" id="blockedPopup" aria-hidden="true">
+    <div class="blocked-box" role="dialog" aria-modal="true" aria-labelledby="blockedTitle" tabindex="-1">
+      <button class="popup-close" onclick="hideBlockedPopup()" aria-label="Close">✕</button>
+      <h2 id="blockedTitle" class="blocked-title">Access Denied</h2>
+      <p class="blocked-sub">You need permission to access 5G88.</p>
+      <div id="blockedInfo" class="blocked-info"></div>
+      <div class="blocked-actions">
+        <button class="btn-cancel" onclick="hideBlockedPopup()">Cancel</button>
+        <a class="btn-contact" id="contactBtn" href="mailto:support@5g88.local">Contact us</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="login-box">
+    <img src="https://i.imgur.com/voSG3KC.gif" alt="5G88 Logo">
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active" id="tab-userpass">Username Login</div>
+      <div class="tab" id="tab-google">Google Login</div>
+    </div>
+
+    <!-- Username/Password Form -->
+    <form id="form-userpass" class="form active">
+      <div class="group">
+        <label class="label" for="username">Username</label>
+        <input class="input" id="username" autocomplete="off" autocapitalize="off" placeholder="Enter Username" required>
+      </div>
+<div class="group password-wrap">
+  <label class="label" for="password">Password</label>
+
+  <div class="field">
+    <input class="input" id="password" type="password"
+           autocomplete="current-password" placeholder="Enter Password" required>
+
+    <button type="button" class="toggle-eye" id="eyeBtn"
+            aria-label="Show password" aria-pressed="false" data-state="hide">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <path id="eyePath" fill="currentColor"
+          d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z"/>
+      </svg>
+    </button>
+  </div>
+</div>
+<div class="forgot-row">
+  <button type="button" id="createBtn" class="link-btn">Create username</button>
+  <button type="button" id="forgotBtn" class="link-btn">Forgot password?</button>
+</div>
+      <button class="btn" id="btnUserpass">Login</button>
+      <!-- (Opsional) Buat akaun baru -->
+      <!-- <button type="button" class="btn ghost" onclick="createAccount()">Create Account</button> -->
+    </form>
+
+    <!-- Google Login Form -->
+    <div id="form-google" class="form">
+      <button class="btn" id="googleLoginBtn">Login with Google</button>
+    </div>
+
+    <div class="sep"><span>or</span></div>
+    <div style="font-size:12px; opacity:.9; text-align:center;">
+      By continuing, you agree to our Terms and acknowledge our Privacy Policy.
+    </div>
+  </div>
+<!-- FORGOT PASSWORD POPUP -->
+<div id="forgotOverlay" class="blocked-overlay" aria-hidden="true">
+  <div class="blocked-box forgot-box zoom-in" role="dialog" aria-modal="true">
+    <button class="popup-close" id="forgotClose" aria-label="Close">✕</button>
+    <h3 class="popup-title" style="margin-bottom:14px">Forgot Password</h3>
+
+    <div class="group">
+      <label class="label" for="fpUsername">Username register</label>
+      <input id="fpUsername" class="input" placeholder="Username">
+      <div id="fpUserErr" class="err-msg" style="display:none">Username not register</div>
+    </div>
+
+    <div class="group" style="margin-bottom:6px">
+      <label class="label" for="fpNote">Optional (forgot password)</label>
+      <input id="fpNote" class="input" placeholder="(opsional)">
+    </div>
+
+    <div class="actions-row">
+      <button id="fpCancel" class="btn-cfp" type="button">Cancel</button>
+      <button id="fpRequest" class="btn-req" type="button">Request</button>
+    </div>
+  </div>
+</div>
+<!-- CREATE ACCOUNT POPUP -->
+<div id="createOverlay" class="blocked-overlay" aria-hidden="true">
+  <div class="blocked-box forgot-box zoom-in" role="dialog" aria-modal="true">
+    <button class="popup-close" id="createClose" aria-label="Close">✕</button>
+    <h3 class="popup-title" style="margin-bottom:14px">Create Account</h3>
+
+    <p style="color:rgba(255,255,255,.9); line-height:1.6; margin:6px 0 16px;">
+      Contact our 5G88 LiveChat admin to create a login username &amp; password,Click Create Now!
+    </p>
+
+    <div class="actions-row">
+      <button id="createCancel" class="btn-cfp" type="button">Cancel</button>
+      <button id="createNow" class="btn-req" type="button">Create Now</button>
+    </div>
+  </div>
+</div>
+<!-- Live Chat floating widget -->
+<div class="lc-wrap" id="lcWrap">
+  <button class="lc-btn" id="lcToggle">
+    <span>Live Chat</span>
+    <span class="lc-dot" id="lcDot"></span>
+  </button>
+  <div class="lc-panel" id="lcPanel" aria-hidden="true">
+  <iframe id="lcFrame" class="lc-iframe"
+        title="Live Chat"
+        sandbox="allow-scripts allow-same-origin allow-popups"
+        referrerpolicy="no-referrer">
+  </iframe>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"></script>
+<script src="../login/login.js"></script>
+</body>
+</html>
