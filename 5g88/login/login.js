@@ -717,6 +717,6 @@ document.getElementById("username")?.addEventListener("blur", () => {
   let gl = null;
   try { gl = JSON.parse(localStorage.getItem("gmailLogin") || "null"); } catch {}
   if (gl?.email){
-    location.replace("/main");
+    location.replace("/home");
   }
 })();
